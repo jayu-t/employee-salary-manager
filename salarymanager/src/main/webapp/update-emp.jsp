@@ -1,13 +1,31 @@
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="com.jayeshtajane.salarymanager.modal.MyConnection"%>
+<%@page import="java.sql.Connection"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 
 <%
+
 System.out.println("REQUEST : FILE = update-emp.jsp");
 String empId = request.getParameter("emp-id");
-String empName = "jay";
-String empCity = "akole";
-String empContact = "9172959534";
-String empSal = "20000";
+String empName = "";
+String empCity = "";
+String empContact = "";
+String empSal = "";
+
+Connection con = MyConnection.getConnection();
+Statement stmt;
+stmt = con.createStatement();
+String query = "select * from employee where empid='" + empId + "'";
+ResultSet rs = stmt.executeQuery(query);
+
+while(rs.next()) {
+	empName = rs.getString("ename");
+	empCity = rs.getString("city");
+	empContact = rs.getString("contact");
+	empSal = rs.getString("salary");
+}
 %>
 <!-- Delete alert Modal -->
 <div class="modal fade" id="deleteAlert" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
@@ -35,7 +53,7 @@ String empSal = "20000";
     <input type="text" value="<%out.println(empId); %>" id="inputId" name="emp-id" hidden>
     <div class="form-group">
         <label for="inputName">Name</label>
-        <input type="text" pattern="[a-zA-Z][a-zA-Z ]+" value="<%out.println(empName + "AA"); %>" class="form-control" id="inputName" name="ename" placeholder="Enter Name" require>
+        <input type="text" pattern="[a-zA-Z][a-zA-Z ]+" value="<%out.println(empName); %>" class="form-control" id="inputName" name="ename" placeholder="Enter Name" require>
     </div>
     <div class="form-group">
         <label for="inputCity">City</label>
@@ -47,7 +65,7 @@ String empSal = "20000";
     </div>
     <div class="form-group">
         <label for="inputSal">Salary</label>
-        <input type="number" value="<%out.println(empSal); %>" min="1" class="form-control" id="inputSal" name="salary" placeholder="Salary">
+        <input type="text" value="<%out.println(empSal); %>" class="form-control" id="inputSal" name="salary" placeholder="Salary">
     </div>
     <div class="form-group">
         <input type="submit" onclick="updateEmployee()" class="btn btn-primary" value="Update">

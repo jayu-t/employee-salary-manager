@@ -9,10 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.jayeshtajane.salarymanager.employee.Employee;
-import com.jayeshtajane.salarymanager.modal.attendence.Attendence;
+import com.jayeshtajane.salarymanager.modal.attendence.GetAttendence;
+import com.jayeshtajane.salarymanager.modal.attendence.SaveAttendence;
 import com.jayeshtajane.salarymanager.modal.employee.DeleteEmployee;
+import com.jayeshtajane.salarymanager.modal.employee.GetEmployee;
 import com.jayeshtajane.salarymanager.modal.employee.SaveEmployee;
 import com.jayeshtajane.salarymanager.modal.employee.UpdateEmployee;
+import com.jayeshtajane.salarymanager.modal.salary.GetSalary;
 import com.jayeshtajane.salarymanager.modal.salary.Salary;
 
 /**
@@ -37,6 +40,7 @@ public class Main extends HttpServlet {
 		String attendenceList = request.getParameter("attendence-list");
 		String attendenceDate = request.getParameter("attendence-date");
 		System.out.println("INFO : ATTENDENCE LIST = " + attendenceList);
+		System.out.println("INFO : ATTENDENCE Date = " + attendenceDate);
 		
 		int empId = -1;
 		if(request.getParameter("emp-id") != null)
@@ -47,17 +51,16 @@ public class Main extends HttpServlet {
 		//System.out.println("INFO : Main.java - empId = " + empId);
 		
 		if(path.equals("/attendence")) {
-			GetData data = new GetData();
-			String attendence = data.getAttendence();
-			response.getWriter().append(attendence);
+			/*GetData data = new GetData();
+			String attendence = data.getAttendence();*/
+			response.getWriter().append(new GetAttendence().getAttendence(attendenceDate));
 		}
 		else if(path.equals("/attendence/save")) {
-			new Attendence(attendenceList, attendenceDate).save();
+			new SaveAttendence().save(attendenceList, attendenceDate);
 		}
+		
 		else if(path.equals("/employee")) {
-			GetData data = new GetData();
-			String employee = data.getEmployee();
-			response.getWriter().append(employee);
+			response.getWriter().append(new GetEmployee().get());
 		}
 		else if(path.equals("/employee/name")) {
 			GetData data = new GetData();
@@ -65,9 +68,7 @@ public class Main extends HttpServlet {
 			response.getWriter().append(employee);
 		}		
 		else if(path.equals("/salary")) {
-			GetData data = new GetData();
-			String salary = data.getSalary();
-			response.getWriter().append(salary);
+			response.getWriter().append(new GetSalary().get());
 		}
 		else if(path.equals("/salary/pay")) {
 			double amount = Double.parseDouble(request.getParameter("payable-amount"));
@@ -94,7 +95,7 @@ public class Main extends HttpServlet {
 			
 			System.out.println("INFO : Main.java update if Employee = \n" + emp);
 			
-			new UpdateEmployee(emp).update();
+			new UpdateEmployee().update(emp);
 		}
 		else if(path.equals("/employee/save")) {
 			Employee emp = new Employee();
@@ -105,11 +106,11 @@ public class Main extends HttpServlet {
 			
 			System.out.println("INFO : Main.java save if Employee = \n" + emp);
 			
-			new SaveEmployee(emp).save();
+			new SaveEmployee().save(emp);
 		}
 		else if(path.equals("/employee/delete")) {
 			System.out.println("INFO : Main.java update if Employee id = \n" + empId);
-			new DeleteEmployee(empId).delete();
+			new DeleteEmployee().delete(empId);
 		}
 		
 	}

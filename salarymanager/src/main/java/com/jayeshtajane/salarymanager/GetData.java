@@ -14,6 +14,7 @@ public class GetData {
 	static private ArrayList<History> history = null;
 	static private String historyJson = null;
 	
+	
 	static public void setEmployee(Employee e) {
 		GetData.employee.add(e);
 		ObjectMapper om = new ObjectMapper();
@@ -38,6 +39,23 @@ public class GetData {
 	}
 	static public String getHistoryJson() {
 		return historyJson;
+	}
+	
+	public String getAttendence() {
+		if(GetData.employee == null) {
+			employee = new ArrayList<Employee>();
+			for(int i=0; i<5; i++) {
+				Employee e = new Employee();
+				e.setEmpId(i);
+				e.setEmpName("a"+i);
+				e.setEmpSal(Double.valueOf(1000 + i)); 
+				e.setPresent(true); 
+				e.setEmpBalance(200001 + i);
+				GetData.employee.add(e);
+			}
+			GetData.employeeJson = convertToJson(employee);
+		}
+		return GetData.employeeJson;
 	}
 
 	public String getEmployee() {
@@ -67,40 +85,6 @@ public class GetData {
 				return e.getEmpName();
 		}
 		return null;
-	}
-	
-	public String saveAttendence() {
-		if(GetData.employee == null) {
-			employee = new ArrayList<Employee>();
-			for(int i=0; i<5; i++) {
-				Employee e = new Employee();
-				e.setEmpId(i);
-				e.setEmpName("a"+i);
-				e.setEmpSal(Double.valueOf(1000 + i));
-				e.setPresent(true); 
-				e.setEmpBalance(200001 + i);
-				GetData.employee.add(e);
-			}
-			GetData.employeeJson = convertToJson(employee);
-		}
-		return GetData.employeeJson;
-	}
-	
-	public String getAttendence() {
-		if(GetData.employee == null) {
-			employee = new ArrayList<Employee>();
-			for(int i=0; i<5; i++) {
-				Employee e = new Employee();
-				e.setEmpId(i);
-				e.setEmpName("a"+i);
-				e.setEmpSal(Double.valueOf(1000 + i)); 
-				e.setPresent(true); 
-				e.setEmpBalance(200001 + i);
-				GetData.employee.add(e);
-			}
-			GetData.employeeJson = convertToJson(employee);
-		}
-		return GetData.employeeJson;
 	}
 	
 	public String getSalary() {

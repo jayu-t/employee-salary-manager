@@ -23,6 +23,11 @@ function showAttendence() {
 
             // Setting attendence table in container div
             //div.innerHTML += this.responseText;
+            console.log("Response = " + this.responseText);
+            if(this.responseText == "") {
+                hideWaitingModal();
+                return;
+            }
             let attendence = JSON.parse(this.responseText);
             //let table = document.getElementById("attendence-table");
             //table.innerHTML = attendence;
@@ -91,7 +96,7 @@ function showAttendence() {
             hideWaitingModal();
 		} 
 	};
-	xhttp.open("GET", './data/attendence', true);
+	xhttp.open("GET", './data/attendence?attendence-date=' + getTodaysDate(), true);
 	xhttp.send();
 }
 
@@ -110,6 +115,7 @@ function showEmployee() {
             changeNavLink("employee");
             
             employee = JSON.parse(this.responseText);
+            console.log(employee);
 
             let top = `
             <main class="employee">
