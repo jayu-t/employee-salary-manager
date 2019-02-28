@@ -52,6 +52,26 @@ public class GetEmployee {
 		return employeeJson;
 	}
 	
+	public String getName(int empid) {
+		try {
+			Connection con = MyConnection.getConnection();
+			Statement stmt;
+			stmt = con.createStatement();
+			String query = "select ename from employee where empid="+empid;
+			ResultSet employeeResult = stmt.executeQuery(query);
+			
+			while(employeeResult.next()) {
+				System.out.println("INFO : Employee name found");
+				System.out.println("INFO : Employee name = " + employeeResult.getString("ename"));
+				return employeeResult.getString("ename");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("INFO : Employee data not geted");
+		}
+		return "";
+	}
+	
 	class Data {
 		String empId;
 		String empName;

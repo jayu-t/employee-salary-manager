@@ -35,7 +35,7 @@ function paySalary(button) {
                 // Setting transaction info to last td
                 buttonColumnTd.innerHTML = 'Salary paid rupees '+mainBalance;
             } 
-        };
+        }; 
         // if givenRupees > mainBalance send amt=mainBalance othrwise send givenRupees
         xhttp.open("GET", './data/salary/pay?emp-id='+id+'&payable-amount='+mainBalance, true);
         xhttp.send();

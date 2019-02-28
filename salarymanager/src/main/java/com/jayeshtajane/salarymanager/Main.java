@@ -15,6 +15,7 @@ import com.jayeshtajane.salarymanager.modal.employee.DeleteEmployee;
 import com.jayeshtajane.salarymanager.modal.employee.GetEmployee;
 import com.jayeshtajane.salarymanager.modal.employee.SaveEmployee;
 import com.jayeshtajane.salarymanager.modal.employee.UpdateEmployee;
+import com.jayeshtajane.salarymanager.modal.history.History;
 import com.jayeshtajane.salarymanager.modal.salary.GetSalary;
 import com.jayeshtajane.salarymanager.modal.salary.Salary;
 
@@ -63,27 +64,25 @@ public class Main extends HttpServlet {
 			response.getWriter().append(new GetEmployee().get());
 		}
 		else if(path.equals("/employee/name")) {
-			GetData data = new GetData();
-			String employee = data.getEmployeeName(empId);
-			response.getWriter().append(employee);
+			response.getWriter().append(new GetEmployee().getName(empId));
 		}		
 		else if(path.equals("/salary")) {
 			response.getWriter().append(new GetSalary().get());
 		}
 		else if(path.equals("/salary/pay")) {
-			double amount = Double.parseDouble(request.getParameter("payable-amount"));
+			String amount = request.getParameter("payable-amount");
+			String eid = request.getParameter("emp-id");
 			Salary sal = new Salary();
-			sal.pay(empId, amount);
+			sal.pay(eid, amount);
 		}
 		else if(path.equals("/salary/pay-extra")) {
-			double amount = Double.parseDouble(request.getParameter("payable-amount"));
+			String amount = request.getParameter("payable-amount");
+			String eid = request.getParameter("emp-id");
 			Salary sal = new Salary();
-			sal.payExtra(empId, amount);
+			sal.payExtra(eid, amount);
 		}
 		else if(path.equals("/history")) {
-			GetData data = new GetData();
-			String history = data.getHistory();
-			response.getWriter().append(history);
+			response.getWriter().append(new History().getHistory());
 		}
 		else if(path.equals("/employee/update")) {
 			Employee emp = new Employee();
