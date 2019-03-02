@@ -26,10 +26,28 @@
 	    <artifactId>mysql-connector-java</artifactId>
 	    <version>5.1.38</version>
 	</dependency>
+	<!-- https://mvnrepository.com/artifact/com.google.appengine/appengine-api-1.0-sdk -->
+	<dependency>
+	    <groupId>com.google.appengine</groupId>
+	    <artifactId>appengine-api-1.0-sdk</artifactId>
+	    <version>1.9.64</version>
+	</dependency>
+	
 	
     
   </dependencies>
   <build>
-    <finalName>salarymanager</finalName>
+  	<finalName>salarymanager</finalName>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.1</version>
+            <configuration>
+                <source>1.8</source>
+                <target>1.8</target>
+            </configuration>
+        </plugin>
+    </plugins>
   </build>
 </project>
